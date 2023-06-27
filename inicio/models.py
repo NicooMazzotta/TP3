@@ -1,22 +1,34 @@
 from django.db import models
 
 # Create your models here.
-# class cliente(models.Model):
+class Usuario(models.Model): 
+    Email = models.CharField(max_length=30)
+    Nombre_usuario = models.CharField(max_length=20)
+    contrasenia = models.CharField(max_length=20)
     
-#     def __init__(self, nombre, direccion, correo, objetos_comprados):
-#         self.nombre = nombre
-#         self.direccion = direccion
-#         self.correo = correo
-#         self.objetos_comprados = objetos_comprados
-        
-#     def __str__(self):
-#         return f'Cliente: {self.nombre}, correo: {self.correo}, Direccion de entregas: {self.direccion}'
+    def __str__(self):
+        return f'{self.Nombre_usuario} - {self.Email}'
+    
+class Objeto(models.Model):
+    Nombre = models.CharField(max_length=20)
+    tipo = models.CharField(max_length=20)
+    descripcion = models.CharField(max_length=500)
+    
+    def __str__(self):
+        return f'{self.Nombre} - {self.tipo} - {self.descripcion}'
+    
+class Comprador(Usuario):
+    Direccion_entregas = models.CharField(max_length=20)
+    Objetos_comprados = models.ManyToManyField(Objeto)
+    
+    def listar_objetos_comprados(self):
+        return self.Objetos_comprados.all()
+    
+class Vendedor(Usuario):
+    Direccion_tienda = models.CharField(max_length=20)
+    Objetos_vendidos = models.ManyToManyField(Objeto)
+    
+    def listar_objetos_vendidos(self):
+        return self.Objetos_vendidos.all()
 
-#     def comprar(self, objeto, marca):
-#         self.objetos_comprados.append((objeto, marca))
-#         print(f"se compro exitosamente {objeto} de la marca {marca}")
-
-#     def listar_compras(self):
-#         for compra in self.objetos_comprados:
-#             objeto, marca = compra
-#             print(f"Compro {objeto} de {marca}")
+    
