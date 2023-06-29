@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+Comprador_Creado {{comprador.Nombre_usuario}}
+{% endblock title_head %}
+
+{% block h1_header %}
+bienvenido {{comprador.Nombre_usuario}}
+{% endblock h1_header %}
+
+{% block contenido %}
+Tus datos son los siguientes:<br>
+Nombre: {{comprador.Nombre_usuario}}<br>
+Email: {{comprador.Email}}<br>
+Direccion de entregas: {{comprador.Direccion_entregas}}<br>
+
+{% if comprador.Objetos_comprados.count > 0 %}
+Objetos comprados: {% for objeto in comprador.Objetos_comprados.all %}
+<li>{{ objeto.Nombre }} - {{ objeto.tipo }} - {{ objeto.descripcion }}</li>
+{% endfor %}
+<br>
+{% else %}
+No se registra objetos comprados<br>
+{% endif %}
+
+
+<form action="{% url 'inicio:objeto_crear' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button>
+        <a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:objeto_crear' %}>Agregar Objeto Comprado</a>
+    </button>
+</form>
+
+{% endblock contenido %} 

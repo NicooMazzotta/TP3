@@ -9,11 +9,15 @@ Bienvenido comprador!
 {% endblock h1_header %}
 
 {% block botones_extras %}
-<a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:comprador/crear' %}>Registrar</a>
+<h4>
+    <a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:comprador/crear' %}>Registrar</a>
+</h4>
     <div class="divider-custom divider-light">
         <div class="divider-custom-line"></div>
     </div>
-<a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:comprador/acceder' %}>Acceder</a>
+<h4>   
+    <a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:comprador/acceder' %}>Acceder</a>
+</h4>
 {% endblock botones_extras %}
 
 {% block contenido %}

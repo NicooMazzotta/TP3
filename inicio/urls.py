@@ -11,4 +11,7 @@ urlpatterns = [
     path('vendedor/', views.vendedor, name='vendedor'),
     path('vendedor/crear', views.vendedor_crear, name='vendedor/crear'),
     path('vendedor/acceder', views.vendedor_acceder, name='vendedor/acceder'),
+    path('objetos', views.objetos, name='objetos'),
+    path('objeto_crear', views.objeto_crear, name='objeto_crear'),
+    
 ]

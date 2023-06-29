@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+objetos
+{% endblock title_head %}
+
+{% block h1_header %}
+Bienvenido al apartado de objetos
+{% endblock h1_header %}
+
+{% block botones_extras %}
+<h4>
+<a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:objeto_crear' %}>Agregar objeto</a>
+</h4>
+{% endblock botones_extras %}
+
+{% block contenido %}
+{{mensaje}}
+
+Buscar Objetos:
+<form action = "" method= "get">
+    <table>
+        {{formulario}}
+    </table>
+    <button>Buscar</button>
+</form>
+
+{% if objetos %}
+    {% for objeto in objetos %}
+        <li>{{ objeto.Nombre }} - {{ objeto.tipo }} - {{ objeto.descripcion }}</li>
+    {% endfor %}
+{% else %}
+    <p>
+        No se encontraron objetos con ese nombre
+    </p>
+{% endif %}
+{% endblock contenido %}

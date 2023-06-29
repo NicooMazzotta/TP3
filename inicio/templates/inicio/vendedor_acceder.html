@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title_head %}
-Vendedor
+Vendedor_acceder
 {% endblock title_head %}
 
 {% block h1_header %}
@@ -9,4 +9,14 @@ Acceder como vendedor
 {% endblock h1_header %}
 
 {% block contenido %}
+<p>
+    {{mensaje}}
+    </p>
+    
+    <form action = "" method= "get">
+        <table>
+            {{formulario}}
+        </table>
+        <button>Acceder</button>
+    </form>
 {% endblock contenido %}

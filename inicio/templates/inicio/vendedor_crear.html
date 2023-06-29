@@ -9,6 +9,15 @@ LLego la hora de registrarse vendedor!
 {% endblock h1_header %}
 
 {% block contenido %}
-QUE SE MUESTREEE
-aaaaaaaaaaa
+<p>
+    {{mensaje}}
+    </p>
+    
+    <form action = "" method= "post">
+        {% csrf_token %}
+        <table>
+            {{formulario}}
+        </table>
+        <button>crear</button>
+    </form>
 {% endblock contenido %}
