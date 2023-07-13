@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+Usuario_perfil
+{% endblock title_head %}
+
+{% block h1_header %}
+Perfil:{{request.user.username}}
+{% endblock h1_header %}
+
+{% block botones_extras %}
+{% endblock botones_extras %}
+
+{% block contenido %}
+
+
+{% if request.user.infoextra.avatar %}
+    <img src= {{request.user.infoextra.avatar.url}} alt="" height='180px'>
+{% endif %}<br>
+
+Nombre de Usuario: {{request.user.username}}<br>
+
+{% if request.user.first_name %}
+    Nombre: {{request.user.first_name}}<br>
+{% endif %}
+
+{% if request.user.last_name %}
+Apellido: {{request.user.last_name}}<br>
+{% endif %}
+
+Email: {{request.user.email}}<br>
+
+
+<li class="nav-item btn btn-secondary"><a class=" rounded" href={% url 'Usuarios:usuario_editar_perfil' %}>Editar datos</a></li>
+<li class="nav-item btn btn-secondary"><a class=" rounded" href={% url 'Usuarios:usuario_editar_contrasenia' %}>Editar contrasenia</a></li>
+{% endblock contenido %}

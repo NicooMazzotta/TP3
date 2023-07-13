@@ -1,5 +1,4 @@
 from django import forms
-from ckeditor.fields import RichTextFormField
 
 class CrearUsuario(forms.Form):
     Email = forms.EmailField(max_length=30)
@@ -10,19 +9,16 @@ class AccederUsuario(forms.Form):
     Email = forms.EmailField(max_length=30)
     contrasenia = forms.CharField(max_length=20)
 
+class CrearVendedor(CrearUsuario):
+    Direccion_tienda = forms.CharField(max_length=20, required=False)
     
-class ObjetoBase(forms.Form):
+class CrearComprador(CrearUsuario):
+    Direccion_entregas = forms.CharField(max_length=20)
+    
+class CrearObjeto(forms.Form):
     Nombre = forms.CharField(max_length=20)
     tipo = forms.CharField(max_length=20)
-    precio = forms.IntegerField()
-    imagen = forms.ImageField()
-    descripcion =RichTextFormField(required=False)
+    descripcion = forms.CharField(max_length=50)
     
 class BuscarObjeto(forms.Form):
     Nombre = forms.CharField(max_length=20, required=False)
-    
-class CrearObjeto(ObjetoBase):
-    ...
-
-class ModificarObjeto(ObjetoBase):
-    ...

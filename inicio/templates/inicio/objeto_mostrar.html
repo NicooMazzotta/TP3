@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+objeto_mostrar
+{% endblock title_head %}
+
+{% block h1_header %}
+    <p>
+    {{objeto.Nombre}}
+    </p>
+{% endblock h1_header %}
+
+{% block contenido %}
+<p>
+{{mensaje}}
+</p>
+
+<form action = {% url 'inicio:objeto_crear' %} method= "post" enctype='multipart/form-data'>
+
+<img src= {{objeto.imagen.url}} alt="" height='100px'>
+<li>Nombre: {{objeto.Nombre}} </li>
+<li>tipo: {{objeto.tipo}}</li>
+<li>vendedor: {{objeto.vendedor}}</li>
+<li>descripcion: {{objeto.descripcion|safe}}</li>
+<li>fecha_publicacion: {{objeto.fecha_publicacion}}</li>
+{% endblock contenido %}

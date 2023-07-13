@@ -1,24 +1,20 @@
 {% extends 'base.html' %}
 
 {% block title_head %}
-objeto_Crear
+Usuario_edicion_perfil
 {% endblock title_head %}
 
 {% block h1_header %}
-Agrega un objeto!
+Cambia tus datos
 {% endblock h1_header %}
 
 {% block contenido %}
-<p>
-{{mensaje}}
-</p>
 
-<form action = {% url 'inicio:objeto_crear' %} method= "post" enctype='multipart/form-data'>
+<form action = {% url 'Usuarios:usuario_editar_perfil' %} method= "post" enctype='multipart/form-data'>
     {% csrf_token %}
     <table>
-        {{form}}
-        {{form.media}}
+        {{formulario}}
     </table>
-    <button>Agregar</button>
+    <button >Confirmar cambios</button>
 </form>
 {% endblock contenido %}

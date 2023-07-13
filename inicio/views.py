@@ -1,122 +1,66 @@
+from typing import Any, Dict
+from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
-from inicio.forms import CrearVendedor, CrearComprador, CrearObjeto, AccederUsuario, BuscarObjeto
-from inicio.models import Vendedor, Comprador, Objeto
+from inicio.models import Objeto
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.contrib.auth.decorators import login_required
+from inicio.forms import BuscarObjeto
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def inicio(request):
     return render(request, 'inicio/inicio.html')
 
-def comprador(request):
-    return render(request, 'inicio/comprador.html')
-
-def comprador_crear(request):
+class CrearObjeto(LoginRequiredMixin, CreateView):
+    model = Objeto
+    template_name = 'inicio/objeto_crear.html'
+    fields = ['imagen','Nombre','tipo','precio','descripcion']
+    success_url = reverse_lazy('inicio:objetos')
     
-    mensaje = ''
+    def form_valid(self, form):
+        form.instance.vendedor = self.request.user
+        return super().form_valid(form)
     
-    if(request.method == "POST"):
-        formulario = CrearComprador(request.POST)
+class Objetos(LoginRequiredMixin, ListView):
+    model = Objeto
+    template_name = "inicio/objetos.html"
+    context_object_name = 'objetos'
+    
+class ListarObjetos(ListView):
+    model = Objeto
+    template_name = "inicio:objetos.html"
+    context_object_name = 'objetos'
+    
+    def get_queryset(self):
+        
+        listado_de_objetos=[]
+        
+        formulario = BuscarObjeto(self.request.GET)
         if formulario.is_valid():
-            informacion = formulario.cleaned_data
-            email = informacion['Email']
-            
-            if Comprador.objects.filter(Email=email).exists():
-                mensaje = 'El correo electronico ya fue registrado. Por favor, intente con otro'
-            else:
-                comprador = Comprador(Email=informacion['Email'],Nombre_usuario=informacion['Nombre_usuario'],contrasenia=informacion['contrasenia'],Direccion_entregas=informacion['Direccion_entregas'])
-                comprador.save()
-                mensaje = f'Se creo el comprador: {comprador.Nombre_usuario} - Existosamente!'
-                return render(request, 'inicio/comprador_creado.html', {'comprador' : comprador, 'mensaje': mensaje})
-        else:
-            return render(request, 'inicio/comprador_crear.html', {'formulario' : formulario})
-    
-    formulario = CrearComprador()
-    return render(request, 'inicio/comprador_crear.html', {'formulario' : formulario, 'mensaje': mensaje})
-
-def comprador_acceder(request):
-    mensaje = ''
-    formulario = AccederUsuario(request.GET)
-    if formulario.is_valid():
-        informacion = formulario.cleaned_data
-        email_a_buscar = informacion['Email']
-        contrasenia_a_buscar = informacion['contrasenia']
+            nombre_a_buscar = formulario.cleaned_data['Nombre']
+            listado_de_objetos = Objeto.objects.filter(nombre__icontains=nombre_a_buscar)
         
-        try:
-            comprador = Comprador.objects.get(Email=email_a_buscar, contrasenia= contrasenia_a_buscar)
-            return render(request, 'inicio/comprador_creado.html', {'comprador': comprador})
-        except Comprador.DoesNotExist:
-            mensaje = 'No se pudo iniciar'
+        return listado_de_objetos
+    
+    def get_context_data(self, **kwargs):
+        contexto = super().get_context_data(**kwargs)
+        contexto['formulario'] = BuscarObjeto()
         
-    formulario = AccederUsuario()
-    return render(request, 'inicio/comprador_acceder.html', {'formulario': formulario, 'mensaje': mensaje})
-
-def vendedor(request):
-    return render(request, 'inicio/vendedor.html')
-
-def vendedor_crear(request):
+        return contexto
     
-    mensaje = ''
+class ModificarObjeto(LoginRequiredMixin, UpdateView):
+    model = Objeto
+    template_name = "inicio/objeto_modificar.html"
+    fields = ['imagen','Nombre','tipo','precio','descripcion']
+    success_url = reverse_lazy('inicio:objetos')  
     
-    if(request.method == "POST"):
-        formulario = CrearVendedor(request.POST)
-        if formulario.is_valid():
-            informacion = formulario.cleaned_data
-            email = informacion['Email']
-            
-            if Vendedor.objects.filter(Email=email).exists():  
-                mensaje = 'el correo electronico ya fue. Por favor, intente con otro'
-            else:
-                vendedor = Vendedor(Email=informacion['Email'],Nombre_usuario=informacion['Nombre_usuario'],contrasenia=informacion['contrasenia'], Direccion_tienda=informacion['Direccion_tienda'])
-                vendedor.save()
-                mensaje = f'Se creo el vendedor: {vendedor.Nombre_usuario} - Existosamente!'
-                return render(request, 'inicio/vendedor_creado.html', {'vendedor' : vendedor, 'mensaje': mensaje})
-        else:
-            return render(request, 'inicio/vendedor_crear.html', {'formulario' : formulario})
+class EliminarObjeto(LoginRequiredMixin, DeleteView):
+    model = Objeto
+    template_name = "inicio/objeto_eliminar.html"
+    success_url = reverse_lazy('inicio:objetos')
     
-    formulario = CrearVendedor()
-    return render(request, 'inicio/vendedor_crear.html', {'formulario' : formulario, 'mensaje': mensaje})
-
-
-def vendedor_acceder(request):
-    mensaje = ''
-    formulario = AccederUsuario(request.GET)
-    if formulario.is_valid():
-        informacion = formulario.cleaned_data
-        email_a_buscar = informacion['Email']
-        contrasenia_a_buscar = informacion['contrasenia']
-        
-        try:
-            vendedor = Vendedor.objects.get(Email=email_a_buscar, contrasenia= contrasenia_a_buscar)
-            return render(request, 'inicio/vendedor_creado.html', {'vendedor': vendedor})
-        except Vendedor.DoesNotExist:
-            print("llegue aca")
-            mensaje = 'No se pudo iniciar'
-        
-    formulario = AccederUsuario()
-    return render(request, 'inicio/vendedor_acceder.html', {'formulario': formulario, 'mensaje': mensaje})
-
-def objetos(request):
-    formulario = BuscarObjeto(request.GET)
-    if formulario.is_valid():
-        nombre_objeto = formulario.cleaned_data['Nombre']
-        listado_objetos = Objeto.objects.filter(Nombre__icontains=nombre_objeto)
-        
-    formulario = BuscarObjeto()    
-    return render(request, 'inicio/objetos.html', {'formulario': formulario, 'objetos': listado_objetos})
-
-def objeto_crear(request):
-    
-    mensaje = ''
-    
-    if(request.method == "POST"):
-        formulario = CrearObjeto(request.POST)
-        if formulario.is_valid():
-            informacion = formulario.cleaned_data
-            objeto = Objeto(Nombre=informacion['Nombre'],tipo=informacion['tipo'],descripcion=informacion['descripcion'])
-            objeto.save()
-            mensaje = f'Se creo el objeto: {objeto.Nombre} - Existosamente!'
-            return redirect('inicio:objetos')
-        else:
-            return render(request, 'inicio/objeto_crear.html', {'formulario' : formulario})
-    
-    
-    formulario = CrearObjeto()
-    return render(request, 'inicio/objeto_crear.html', {'formulario' : formulario, 'mensaje': mensaje})
+class MostrarObjetos(LoginRequiredMixin, DetailView):
+    model = Objeto
+    template_name = "inicio/objeto_mostrar.html"

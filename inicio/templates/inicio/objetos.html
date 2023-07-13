@@ -10,7 +10,7 @@ Bienvenido al apartado de objetos
 
 {% block botones_extras %}
 <h4>
-<a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:objeto_crear' %}>Agregar objeto</a>
+    <li class="nav-item btn btn-primary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:objeto_crear' %}>Vender objeto</a></li>
 </h4>
 {% endblock botones_extras %}
 
@@ -18,16 +18,25 @@ Bienvenido al apartado de objetos
 {{mensaje}}
 
 Buscar Objetos:
-<form action = "" method= "get">
+<form action = {% url 'inicio:objetos' %} method= "get" enctype='multipart/form-data'>
     <table>
-        {{formulario}}
+        {{form}}
+        {{form.media}}
     </table>
     <button>Buscar</button>
 </form>
 
 {% if objetos %}
     {% for objeto in objetos %}
-        <li>{{ objeto.Nombre }} - {{ objeto.tipo }} - {{ objeto.descripcion }}</li>
+        <li>
+            {% if objeto.imagen %}
+                <img src= {{objeto.imagen.url}} alt="" height='50px'>
+            {% endif %}
+            {{ objeto}}<br>
+            <button><a class="navbar-brand" href= {% url 'inicio:objeto_eliminar' objeto.id %}>Eliminar objeto</a>  </button>
+            <button><a class="navbar-brand" href={% url 'inicio:objeto_modificar' objeto.id %}>Modificar objeto</a> </button>
+            <button><a class="navbar-brand" href={% url 'inicio:objeto_mostrar' objeto.id %}>mostrar mas</a> </button>
+        </li>
     {% endfor %}
 {% else %}
     <p>

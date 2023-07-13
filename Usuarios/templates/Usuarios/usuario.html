@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 
 {% block title_head %}
-Comprador
+Usuario
 {% endblock title_head %}
 
 {% block h1_header %}
-Bienvenido comprador!
+Bienvenido
 {% endblock h1_header %}
 
 {% block botones_extras %}
 <h4>
-    <a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:comprador/crear' %}>Registrar</a>
+    <li<a class="nav-item btn btn-primary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'Usuarios:usuario_registrar' %}>Registrar</a></li>
 </h4>
     <div class="divider-custom divider-light">
         <div class="divider-custom-line"></div>
     </div>
-<h4>   
-    <a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:comprador/acceder' %}>Acceder</a>
+<h4>     
+    <li<a class="nav-item btn btn-primary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'Usuarios:usuario_acceder' %}>Acceder</a></li>
 </h4>
 {% endblock botones_extras %}
 

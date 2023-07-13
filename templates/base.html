@@ -28,9 +28,17 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         {% block botones_direccion %}
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:comprador' %}>Comprador</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:vendedor' %}>Vendedor</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:objetos' %}>Objetos</a></li>
+                            {% if request.user.is_authenticated %}
+                                {% if request.user.infoextra.avatar %}
+                                    <img src= {{request.user.infoextra.avatar.url}} alt="" height='50px'>
+                                {% endif %}
+                                <li class="nav-item btn btn-secondary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'Usuarios:usuario_perfil' %}>{{request.user.username}}</a></li>
+                                <li class="nav-item btn btn-secondary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:objetos' %}>Objetos</a></li>
+                                <li class="nav-item btn btn-primary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'Usuarios:usuario_desconectar' %}>Desconectar</a></li>
+                            {% else %}
+                                <li class="nav-item btn btn-secondary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'Usuarios:usuario' %}>Usuarios</a></li>
+                            {% endif %}
+
                         {% endblock botones_direccion %}
                     </ul>
                 </div>

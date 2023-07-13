@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+eliminar objetos
+{% endblock title_head %}
+
+{% block h1_header %}
+Bienvenido al apartado de objetos
+{% endblock h1_header %}
+
+{% block botones_extras %}
+{% endblock botones_extras %}
+
+{% block contenido %}
+<form action = {% url 'inicio:objeto_eliminar' objeto.id %} method= "post">
+    {% csrf_token %}
+    <p>Desea eliminar el objeto {{objeto.Nombre}} ?<p/>
+    <button>confirmar</button>
+</form>
+
+{% endblock contenido %}

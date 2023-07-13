@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title_head %}
-Comprador_Crear
+objeto_modificar
 {% endblock title_head %}
 
 {% block h1_header %}
-LLego la hora de registrarse comprador!
+modifica un objeto!
 {% endblock h1_header %}
 
 {% block contenido %}
@@ -13,11 +13,12 @@ LLego la hora de registrarse comprador!
 {{mensaje}}
 </p>
 
-<form action = "" method= "post">
+<form action = {% url 'inicio:objeto_modificar' objeto.id %} method= "post" enctype='multipart/form-data'>
     {% csrf_token %}
     <table>
-        {{formulario}}
+        {{form}}
+        {{form.media}}
     </table>
-    <button>crear</button>
+    <button>modificar</button>
 </form>
 {% endblock contenido %}

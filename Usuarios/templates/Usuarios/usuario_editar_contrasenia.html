@@ -1,24 +1,20 @@
 {% extends 'base.html' %}
 
 {% block title_head %}
-objeto_Crear
+Usuario_edicion_contrasenia
 {% endblock title_head %}
 
 {% block h1_header %}
-Agrega un objeto!
+Cambia tus contrasenia
 {% endblock h1_header %}
 
 {% block contenido %}
-<p>
-{{mensaje}}
-</p>
 
-<form action = {% url 'inicio:objeto_crear' %} method= "post" enctype='multipart/form-data'>
+<form action = {% url 'Usuarios:usuario_editar_contrasenia' %} method= "post">
     {% csrf_token %}
     <table>
         {{form}}
-        {{form.media}}
     </table>
-    <button>Agregar</button>
+    <button>Confirmar cambios</button>
 </form>
 {% endblock contenido %}

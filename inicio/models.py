@@ -1,34 +1,17 @@
 from django.db import models
+from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
-# Create your models here.
-class Usuario(models.Model): 
-    Email = models.CharField(max_length=30)
-    Nombre_usuario = models.CharField(max_length=20)
-    contrasenia = models.CharField(max_length=20)
-    
-    def __str__(self):
-        return f'{self.Nombre_usuario} - {self.Email}'
-    
 class Objeto(models.Model):
     Nombre = models.CharField(max_length=20)
     tipo = models.CharField(max_length=20)
-    descripcion = models.CharField(max_length=50)
-    
-    def __str__(self):
-        return f'{self.Nombre} - {self.tipo} - {self.descripcion}'
-    
-class Comprador(Usuario):
-    Direccion_entregas = models.CharField(max_length=20)
-    Objetos_comprados = models.ManyToManyField(Objeto)
-    
-    def listar_objetos_comprados(self):
-        return self.Objetos_comprados.all()
-    
-class Vendedor(Usuario):
-    Direccion_tienda = models.CharField(max_length=20)
-    Objetos_vendidos = models.ManyToManyField(Objeto)
-    
-    def listar_objetos_vendidos(self):
-        return self.Objetos_vendidos.all()
+    descripcion = RichTextField(null=True)
+    precio = models.IntegerField()
+    imagen = models.ImageField(upload_to='imagen')
+    fecha_publicacion = models.DateField(auto_now_add=True)
+    vendedor = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    en_venta = models.BooleanField(default=True)
+    comprador = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='compras')
 
-    
+    def __str__(self):
+        return f'{self.Nombre}, de  valor ${self.precio} - publicado el {self.fecha_publicacion.strftime("%d/%m/%Y")}'

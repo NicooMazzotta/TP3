@@ -1,17 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title_head %}
-Inicio
+Usuario_desconectar
 {% endblock title_head %}
 
 {% block h1_header %}
-{% if request.user.is_authenticated %}  
-Bienvendio {{request.user.username}}!
-{% else %}
-Bienvenidos
-{% endif %}
+Te desconectaste con exito!
 {% endblock h1_header %}
 
+{% block botones_extras %}
+{% endblock botones_extras %}
+
 {% block contenido %}
-Bienvenidos a la pagina
 {% endblock contenido %}
