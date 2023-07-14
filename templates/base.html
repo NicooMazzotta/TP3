@@ -32,12 +32,13 @@
                                 {% if request.user.infoextra.avatar %}
                                     <img src= {{request.user.infoextra.avatar.url}} alt="" height='50px'>
                                 {% endif %}
-                                <li class="nav-item btn btn-secondary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'Usuarios:usuario_perfil' %}>{{request.user.username}}</a></li>
-                                <li class="nav-item btn btn-secondary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:objetos' %}>Objetos</a></li>
-                                <li class="nav-item btn btn-primary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'Usuarios:usuario_desconectar' %}>Desconectar</a></li>
+                                <li class="nav-item btn btn-secondary"><a class="nav-link py-3 px-0 px-lg-0 rounded" href={% url 'Usuarios:usuario_perfil' %}>{{request.user.username}}</a></li>
+                                <li class="nav-item btn btn-secondary"><a class="nav-link py-3 px-0 px-lg-0 rounded" href={% url 'inicio:objetos' %}>Objetos</a></li>
+                                <li class="nav-item btn btn-primary">  <a class="nav-link py-3 px-0 px-lg-0 rounded" href={% url 'Usuarios:usuario_desconectar' %}>Desconectar</a></li>
                             {% else %}
-                                <li class="nav-item btn btn-secondary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'Usuarios:usuario' %}>Usuarios</a></li>
+                                <li class="nav-item btn btn-secondary"><a class="nav-link py-3 px-0 px-lg-0 rounded" href={% url 'Usuarios:usuario' %}>Usuarios</a></li>
                             {% endif %}
+                            <li class="nav-item btn btn-secondary"><a class="nav-link py-3 px-0 px-lg-0 rounded" href={% url 'Usuarios:usuario' %}>acerca de mi</a></li>
 
                         {% endblock botones_direccion %}
                     </ul>

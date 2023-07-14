@@ -14,4 +14,4 @@ class Objeto(models.Model):
     comprador = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='compras')
 
     def __str__(self):
-        return f'{self.Nombre}, de  valor ${self.precio} - publicado el {self.fecha_publicacion.strftime("%d/%m/%Y")}'
+        return f'{self.Nombre}- Valor ${self.precio} - Publicado el {self.fecha_publicacion.strftime("%d/%m/%Y")}'

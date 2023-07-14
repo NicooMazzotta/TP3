@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+objetos_comprados
+{% endblock title_head %}
+
+{% block h1_header %}
+Bienvenido al apartado de objetos comprados
+{% endblock h1_header %}
+
+{% block botones_extras %}
+{% endblock botones_extras %}
+
+{% block contenido %}
+
+Buscar Objetos:
+<form action = {% url 'inicio:objetos_historial_comprados' %} method= "get" enctype='multipart/form-data'>
+    <table>
+        {{formulario}}
+        {{formulario.media}}
+    </table>
+    <button>Buscar</button>
+</form>
+
+{% if objetos %}
+    {% for objeto in objetos %}
+        <li>
+            {% if objeto.imagen %}
+                <img src= {{objeto.imagen.url}} alt="" height='50px'>
+            {% endif %}
+            {{ objeto}}<br>
+            <button><a class="navbar-brand" href={% url 'inicio:objeto_mostrar' objeto.id %}>Mostrar detalles</a> </button><br>
+        {% endfor %}
+{% else %}
+    <p>
+        No se encontraron comprados!
+    </p>
+{% endif %}
+{% endblock contenido %}

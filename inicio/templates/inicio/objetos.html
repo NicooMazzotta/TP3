@@ -10,37 +10,15 @@ Bienvenido al apartado de objetos
 
 {% block botones_extras %}
 <h4>
-    <li class="nav-item btn btn-primary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:objeto_crear' %}>Vender objeto</a></li>
+    <li class="nav-item btn btn-primary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:objetos_vendedor' %}>Vender objetos</a></li>
+</h4>
+    <div class="divider-custom divider-light">
+        <div class="divider-custom-line"></div>
+    </div>
+<h4>
+    <li class="nav-item btn btn-primary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:objetos_comprador' %}>Comprar objetos</a></li>
 </h4>
 {% endblock botones_extras %}
 
 {% block contenido %}
-{{mensaje}}
-
-Buscar Objetos:
-<form action = {% url 'inicio:objetos' %} method= "get" enctype='multipart/form-data'>
-    <table>
-        {{form}}
-        {{form.media}}
-    </table>
-    <button>Buscar</button>
-</form>
-
-{% if objetos %}
-    {% for objeto in objetos %}
-        <li>
-            {% if objeto.imagen %}
-                <img src= {{objeto.imagen.url}} alt="" height='50px'>
-            {% endif %}
-            {{ objeto}}<br>
-            <button><a class="navbar-brand" href= {% url 'inicio:objeto_eliminar' objeto.id %}>Eliminar objeto</a>  </button>
-            <button><a class="navbar-brand" href={% url 'inicio:objeto_modificar' objeto.id %}>Modificar objeto</a> </button>
-            <button><a class="navbar-brand" href={% url 'inicio:objeto_mostrar' objeto.id %}>mostrar mas</a> </button>
-        </li>
-    {% endfor %}
-{% else %}
-    <p>
-        No se encontraron objetos con ese nombre
-    </p>
-{% endif %}
 {% endblock contenido %}

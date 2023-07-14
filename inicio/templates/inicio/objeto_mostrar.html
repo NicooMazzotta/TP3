@@ -20,6 +20,11 @@ objeto_mostrar
 <img src= {{objeto.imagen.url}} alt="" height='100px'>
 <li>Nombre: {{objeto.Nombre}} </li>
 <li>tipo: {{objeto.tipo}}</li>
+{% if objeto.en_venta %}
+    <li>Objeto actualmente en venta</li>
+{% else %}
+    <li>Objeto vendido</li>
+{% endif %}
 <li>vendedor: {{objeto.vendedor}}</li>
 <li>descripcion: {{objeto.descripcion|safe}}</li>
 <li>fecha_publicacion: {{objeto.fecha_publicacion}}</li>

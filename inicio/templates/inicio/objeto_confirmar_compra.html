@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+Comprar objeto
+{% endblock title_head %}
+
+{% block h1_header %}
+Estas por comprar: {{ objeto.Nombre }}
+{{ mensaje }}
+{% endblock h1_header %}
+
+{% block contenido %}
+<form action = {% url 'inicio:objeto_confirmar_compra' objeto.id %} method="post">
+    {% csrf_token %}
+    <h6>Estas a punto de comprar {{ objeto.Nombre }} por ${{objeto.precio}} desea continuar?</h6>
+    <button>Confirmar compra</button>
+  </form>
+{% endblock contenido %}
