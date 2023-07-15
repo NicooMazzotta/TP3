@@ -1,20 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title_head %}
-objetos_vendedor
+objetos_comprador
 {% endblock title_head %}
 
 {% block h1_header %}
-Bienvenido al menu de objetos para vender
+Bienvenido al menu de objetos para comprar
 {% endblock h1_header %}
 
 {% block botones_extras %}
-<h4>
-    <li<a class="nav-item btn btn-primary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:objeto_crear' %}>Publicar Objeto</a></li>
-</h4>
-<div class="divider-custom divider-light">
-    <div class="divider-custom-line"></div>
-</div>
+
 <h4>     
 <li<a class="nav-item btn btn-primary"><a class="nav-link py-3 px-0 px-lg-3 rounded" href={% url 'inicio:objetos_historial_comprados' %}>Historial Objetos comprados</a></li>
 </h4>
@@ -24,7 +19,7 @@ Bienvenido al menu de objetos para vender
 {{ mensaje }}<br><br>
 
 Objetos disponibles para comprar:
-<form action = {% url 'inicio:objetos_vendedor' %} method= "get" enctype='multipart/form-data'>
+<form action = {% url 'inicio:objetos_comprador' %} method= "get" enctype='multipart/form-data'>
     <table>
         {{formulario}}
         {{formulario.media}}

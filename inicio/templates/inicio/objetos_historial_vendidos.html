@@ -28,7 +28,8 @@ Buscar Objetos:
             {% if objeto.imagen %}
                 <img src= {{objeto.imagen.url}} alt="" height='50px'>
             {% endif %}
-            {{ objeto}}<br><br>
+            {{ objeto}}
+            <button><a class="navbar-brand" href={% url 'inicio:objeto_mostrar' objeto.id %}>Mostrar detalles</a> </button><br><br>
         {% endfor %}
 {% else %}
     <p>

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+    Mensajes_listar_usuarios
+{% endblock title_head %}
+
+{% block h1_header %}
+    Selecciona a quien vas a enviarle un mensaje!
+{% endblock h1_header %}
+
+{% block contenido %}
+    {% if usuarios %}
+        {% for usuario in usuarios %}
+            <h6>{{usuario.username}}: <button><a class="navbar-brand" href= {% url 'Mensajes:chat' usuario.id %}>Enviar mensaje</a></button> </h6>
+        {% endfor %}
+    {% endif %}
+{% endblock contenido %}

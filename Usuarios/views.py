@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -89,11 +89,9 @@ class CustomPasswordChangeForm(PasswordChangeForm):
     def clean_new_password1(self):
         password1 = self.cleaned_data.get('new_password1')
         
-        # Agrega tus propias validaciones aquí
-        
         return password1
 
-class EditarContrasenia(LoginRequiredMixin ,PasswordChangeView):
+class EditarContrasenia(LoginRequiredMixin, PasswordChangeView):
     template_name = 'Usuarios/usuario_editar_contrasenia.html'
     form_class = CustomPasswordChangeForm
     success_url = reverse_lazy('Usuarios:usuario_perfil')

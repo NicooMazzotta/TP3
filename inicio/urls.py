@@ -1,10 +1,11 @@
-from django.urls import path, include
+from django.urls import path
 from inicio import views
 
 app_name = "inicio"
 
 urlpatterns = [
     path('', views.inicio, name='inicio'),
+    path('acerca_de_mi/', views.acerca_de_mi, name='acerca_de_mi'),
     path('objetos/', views.objetos, name='objetos'),
     path('objetos/vendedor', views.ListarObjetos.as_view(), name='objetos_vendedor'),
     path('objetos/vendedor/crear/', views.CrearObjeto.as_view(), name='objeto_crear'),

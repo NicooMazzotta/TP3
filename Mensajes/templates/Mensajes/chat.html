@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+    chat con {{chat.usuario_2}}
+{% endblock title_head %}
+
+{% block h1_header %}
+    chat de {{chat.usuario_2}}
+{% endblock h1_header %}
+
+{% block contenido %}
+            ==================================<br>
+    {% if mensajes %}
+        {% for mensaje in mensajes %}
+            {% if mensaje.remitente == request.user %}
+                Tu:
+                {% else %}
+                {{chat.usuario_2}}:
+                {% endif %}
+                <p> {{mensaje.contenido}}</p> 
+            <br>
+                                {{mensaje.mostrar_fecha_hora}}<br>
+            ==================================<br>
+        {% endfor %}
+    {% else %}
+        No existen mensajes! envia uno...<br><br>
+    {% endif %}
+
+    <form method="POST" action="{% url 'Mensajes:chat' usuario_id=chat.usuario_2.id %}">
+        {% csrf_token %}
+        {{ formulario }}
+        <button type="submit">Enviar</button>
+      </form>
+{% endblock contenido %}

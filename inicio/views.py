@@ -1,5 +1,3 @@
-from typing import Any, Dict
-from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
 from inicio.models import Objeto
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -13,6 +11,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def inicio(request):
     return render(request, 'inicio/inicio.html')
 
+def acerca_de_mi(request):
+    return render(request, 'inicio/acerca_de_mi.html')
+
 class CrearObjeto(LoginRequiredMixin, CreateView):
     model = Objeto
     template_name = 'inicio/objeto_crear.html'
@@ -23,7 +24,7 @@ class CrearObjeto(LoginRequiredMixin, CreateView):
         form.instance.vendedor = self.request.user
         return super().form_valid(form)
 
-class ListarObjetos(ListView):
+class ListarObjetos(LoginRequiredMixin, ListView):
     model = Objeto
     template_name = "inicio/objetos_vendedor.html"
     context_object_name = 'objetos'
@@ -61,7 +62,8 @@ class EliminarObjeto(LoginRequiredMixin, DeleteView):
 class MostrarObjetos(LoginRequiredMixin, DetailView):
     model = Objeto
     template_name = "inicio/objeto_mostrar.html"
-    
+
+@login_required
 def objetos(request):
     return render(request, 'inicio/objetos.html')
 
@@ -76,9 +78,9 @@ class ListarObjetosVendidos(LoginRequiredMixin, ListView):
         formulario = BuscarObjeto(self.request.GET)
         if formulario.is_valid():
             nombre_a_buscar = formulario.cleaned_data['Nombre']
-            listado_de_objetos = Objeto.objects.filter(Nombre__icontains = nombre_a_buscar, en_venta = False)
+            listado_de_objetos = Objeto.objects.filter(Nombre__icontains = nombre_a_buscar, en_venta = False, vendedor=self.request.user)
         else:
-            queryset = Objeto.objects.filter(en_venta=False)
+            queryset = Objeto.objects.filter(en_venta=False, vendedor=self.request.user)
             return queryset
 
         
@@ -91,7 +93,7 @@ class ListarObjetosVendidos(LoginRequiredMixin, ListView):
         return contexto
     
         
-class ListarObjetosDisponibles(ListView):
+class ListarObjetosDisponibles(LoginRequiredMixin, ListView):
     model = Objeto
     template_name = "inicio/objetos_comprador.html"
     context_object_name = 'objetos'
@@ -116,7 +118,8 @@ class ListarObjetosDisponibles(ListView):
         contexto['formulario'] = BuscarObjeto()
         
         return contexto
-    
+
+@login_required
 def confirmar_compra(request, objeto_id):
     mensaje = {}
     objeto = get_object_or_404(Objeto, id=objeto_id)

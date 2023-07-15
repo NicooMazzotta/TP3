@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title_head %}
+    Mensajes
+{% endblock title_head %}
+
+{% block h1_header %}
+    {% if cantidad_chats_sin_leer > 0 %}
+        Tienes {{cantidad_chats_sin_leer}} mensajes para leer
+    {% else %}
+        No tienes mensajes para leer
+    {% endif %}
+{% endblock h1_header %}
+
+{% block contenido %}
+    <button><a class="navbar-brand" href={% url 'Mensajes:listar_usuarios' %}>Enviar nuevo mensaje</a>  </button><br><br>
+    <h2>Chats</h2><br>
+    {% if chats %}
+        {% for chat in chats %}
+            {{chat.usuario_2}}:
+            {% if chat.leido == False %}
+                Mensajes sin leer!
+            {% else %}
+                Sin mensajes por leer
+            {% endif %}
+            <button><a class="navbar-brand" href={% url 'Mensajes:chat' usuario_id=chat.usuario_2.id %}>Ir al chat</a>  </button><br>
+        {% endfor %}
+    {% else %}
+    No existen chats!
+    {% endif %}
+{% endblock contenido %}
